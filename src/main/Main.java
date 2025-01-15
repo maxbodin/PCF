@@ -1,10 +1,12 @@
 package main;
 
 import ast.AST;
+import ast.Term;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
+import interp.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,6 +38,9 @@ public class Main {
             verbose = true;
         }
         analyze(is);
+
+        Value v = ((Term)analyze(is)).interp(new EmptyEnv());
+        System.out.println("====> " + v);
     }
 
     public static AST analyze(InputStream is) throws IOException {
